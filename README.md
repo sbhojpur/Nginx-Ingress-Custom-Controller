@@ -5,16 +5,19 @@ We have been running our micro-services on K8s cluster and using Nginx Ingress c
 
 
 ![TCP Configmap example](/pictures/Picture1.png)
+
 This will configure Nginx Ingress controller to 
 * route TCP traffic on port 1162 to mytcpapp1-svc at port 162
 * route TCP traffic on port 2345 to mytcpapp2-svc at port 164
 
 ![UDP Configmap example](/pictures/Picture2.png)
+
 This will configure Nginx Ingress controller to 
 * route UDP traffic on port 2312 to myudpapp1-svc at port 362
 * route UDP traffic on port 3312 to myudpapp2-svc at port 462
 
 ![Nginx controller configuration](/pictures/Picture3.png)
+
 Nginx controller pod is configured to read 
 * TCP routes from configmap 'tcp-controller-configmap'
 * UDP routes from configmap 'udp-controller-configmap'
