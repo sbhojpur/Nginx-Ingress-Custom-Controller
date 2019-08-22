@@ -4,19 +4,19 @@ Custom controller to create/update TCP/UDP and HTTP/s routes based on custom ann
 We have been running our micro-services on K8s cluster and using Nginx Ingress controller to manage TCP/UDP and HTTP routes. Our Nginx controller runs as a K8s pod and all routing information is controlled by defining TCP/UDP config maps and creating/updating K8s Ingress objects. 
 
 
-![TCP Configmap example](/pictures/Picture1.png)
+![TCP Configmap example](/pictures/Picture1.jpg)
 
 This will configure Nginx Ingress controller to 
 * route TCP traffic on port 1162 to mytcpapp1-svc at port 162
 * route TCP traffic on port 2345 to mytcpapp2-svc at port 164
 
-![UDP Configmap example](/pictures/Picture2.png)
+![UDP Configmap example](/pictures/Picture2.jpg)
 
 This will configure Nginx Ingress controller to 
 * route UDP traffic on port 2312 to myudpapp1-svc at port 362
 * route UDP traffic on port 3312 to myudpapp2-svc at port 462
 
-![Nginx controller configuration](/pictures/Picture3.png)
+![Nginx controller configuration](/pictures/Picture3.jpg)
 
 Nginx controller pod is configured to read 
 * TCP routes from configmap 'tcp-controller-configmap'
@@ -54,5 +54,25 @@ Annotation 'altranNginxIngress' being used to define just one UDP route for the 
 
 ![HTTP Annotations ](/pictures/Picture7.jpg) 
 
-Annotation 'altranNginxIngress' being used to define HTTP routes for the service.
-   
+Annotation 'altranNginxIngress' being used to define 2 HTTP routes for the service.
+  
+# Custom Controller
+* Golang based module.
+* Discovers Nginx Controller pod, nginx controller service, TCP/UDP configmaps and namespaces
+* Watches for K8s services being defined, modified or deleted.  
+* Reads annotation 'altranNginxIngress' and collects service routing information
+* Updates TCP configmap, UDP configmap and HTTP ingress objects as required.
+* Update Nginx controller service for port mapping
+
+![Nginx Custom controller ](/pictures/Picture8.jpg) 
+
+Nginx Ingress controller expose K8s services based on the route information specified in in TCP Configmap, UDP Configmap and HTTP Ingress Objects
+
+
+# Steps to run custom controller in kubenetes cluster.
+1. Download Nginx custom controller binary here :TBD
+2. Create custom controller pod using controller_pod.yaml
+3. Create service with annotation (route information, TCP config details and UDP config details)
+* Download sevice.yaml sample file here
+4.	Access pod using route/TCP/UDP
+
