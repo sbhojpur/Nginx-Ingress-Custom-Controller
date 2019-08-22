@@ -1,0 +1,28 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: server-service4
+  namespace: mynamespace
+  annotations: 
+    altranNginxIngress: '[
+      {"name": "mytcpport", "route": "3333", "type": "TCP"},
+      {"name": "httpport1", "route": "/amap", "type": "HTTP"},
+      {"name": "httpport2", "route": "/bmap", "type": "HTTP"}
+     ]'
+spec:
+  selector:
+    app: pod_server
+  ports:
+  - name: httpport1
+    protocol: TCP 
+    port: 9000
+    targetPort: 8091
+  - name: httpport2
+    protocol: TCP
+    port: 6000
+    targetPort: 9001
+  - name: mytcpport
+    protocol: TCP
+    port: 45
+    targetPort: 5000
+ 
