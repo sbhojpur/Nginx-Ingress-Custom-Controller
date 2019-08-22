@@ -28,11 +28,31 @@ For every new micro-service being deployed, we have to update these configmaps o
 our idea is to create a custom controller which is continously watching our cluster for k8s services being created/modified or deleted and automatically updating these TCP/UDP configmaps and HTTP ingress objects.
 
 # Solution
-1. Define custom annotations for service object (K8s service object). These annotations shall allow users to define TCP/UPD or HTTP routes
+1. User should have a way to define TCP/UDP and HTTP routes within the service manifest file. This can be achived by defining custom annotations.
 2. Create a custom controller which will..
    - Watch for k8s services being create.modified or deleted.
    - Read custom annotation from these services and update TCP Configmap, UDP configmap and HTTP/s ingress whichever is required.
    - Update port mapping information in Nginx controller service object.
    
-![Custom controller](/pictures/Picture4.png)   
+![Custom controller](/pictures/Picture4.jpg)   
+
+# Custom Annotation
+The solution defines a new type of annotation designated as 'altranNginxIngress'. The value of this annotation is an array of JSON objects where each object has 3 fields.
+* name: Name of port as defined under spec.ports section 
+* route: TCP port, UDP port or HTTP URL tag
+* type:  Tyep of traffic, can be TCP, UDP or HTTP
+Incase TCP/UDP load balancing is required route will be the port of incoming traffic.
+Incase of HTTP/s load balancing is required route will be the url tag  like '/mytag1', '/mytag2' etc. Please not character '/' is manadatory
+
+![TCP Annotation ](/pictures/Picture5.jpg) 
+
+Annotation 'altranNginxIngress' being used to define just one TCP route for the service.
+
+![UDP Annotation ](/pictures/Picture6.jpg) 
+
+Annotation 'altranNginxIngress' being used to define just one UDP route for the service.
+
+![HTTP Annotations ](/pictures/Picture7.jpg) 
+
+Annotation 'altranNginxIngress' being used to define HTTP routes for the service.
    
