@@ -70,9 +70,44 @@ Nginx Ingress controller expose K8s services based on the route information spec
 
 
 # Steps to run custom controller in kubenetes cluster.
-1. Download Nginx custom controller binary here :TBD
-2. Create custom controller pod using controller_pod.yaml
+
+Go to master node of kubernetes cluster and execute below mentioned steps:
+1. Clone Nginx-Ingress-Custom-Controller repo:
+
+   a. git clone https://github.com/sbhojpur/Nginx-Ingress-Custom-Controller.git
+   
+   b. cd Nginx-Ingress-Custom-Controller
+
+2. Create Docker image:
+
+   a. docker load -i /pkg/custom_controller_image.tar
+   
+   b. docker tag 410b24de45d9 custom_controller_image:1.1
+   
+
+3. Add label to master node:
+
+   kubectl label nodes <masternode> dedicated=master
+
+4. Create directory and place config file
+
+   a. mkdir /opt
+   
+   b. cd /opt
+   
+   c. mkdir custom_controller_config
+   
+   d. cp /root/.kube/config /opt/custom_controller_config/
+   
+   Note: current config file path is reference to kuberspray. file location could be different.
+
+4. Create custom controller pod using custom_controller_pod.yaml
+
+   kubectl create -f /pkg/custom_controller_pod.yaml
+
 3. Create service with annotation (route information, TCP config details and UDP config details)
-* Download sevice.yaml sample file here
+
+* refer example section
+  
 4.	Access pod using route/TCP/UDP
 
