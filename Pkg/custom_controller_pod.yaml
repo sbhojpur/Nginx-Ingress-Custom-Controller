@@ -21,6 +21,6 @@ spec:
   - name: test-volume
     hostPath:
       # directory location on host
-      path: /root/.kube/
+      path: /opt/custom_controller_config/
       # this field is optional
       type: Directory
