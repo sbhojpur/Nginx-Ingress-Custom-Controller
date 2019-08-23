@@ -82,7 +82,7 @@ Go to master node of kubernetes cluster and execute below mentioned steps:
 
    a. docker load -i /pkg/custom_controller_image.tar
    
-   b. docker tag bdd5e0ad3bab custom_controller_image:1.1
+   b. docker tag 410b24de45d9 custom_controller_image:1.1
    
 
 3. Add label to master node:
