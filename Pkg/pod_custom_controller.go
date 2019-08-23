@@ -152,7 +152,7 @@ func getNginxIngressPathData(clientset *kubernetes.Clientset, key string) (map[s
     if !nginxHTTPIngressExist {
        nginxHttpIngress.SetName("altran-nginx-ingress")
        nginxHttpIngress.SetNamespace(namespace)
-       nginxHttpIngress.SetAnnotations(map[string]string{"kubernetes.io/ingress.class":"nginx", "nginx.ingress.kubernetes.io/ssl-redirect":"false", "nginx.ingress.kubernetes.io/auth-tls-verify-client": "on"})
+       nginxHttpIngress.SetAnnotations(map[string]string{"kubernetes.io/ingress.class":"nginx", "nginx.ingress.kubernetes.io/ssl-redirect":"false"})
        nginxHttpIngress.Spec.Rules = []v1beta1.IngressRule{v1beta1.IngressRule{"dummy.com",
               v1beta1.IngressRuleValue{&v1beta1.HTTPIngressRuleValue{[]v1beta1.HTTPIngressPath{v1beta1.HTTPIngressPath{"/dummytag",v1beta1.IngressBackend{"dummyservice",intstr.FromInt(65535)}}}}} }}
        _, err := clientset.ExtensionsV1beta1().Ingresses(namespace).Create(&nginxHttpIngress)
